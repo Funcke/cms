@@ -30,4 +30,20 @@
 			</div>
 		</div>
 	</div>
+<<<<<<< HEAD
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input type="password" name="password" class="form-control" required/>
+	</div>
+	<div class="form-group">
+		<label for="remember">Remember Me</label>
+		<input type="checkbox" name="remember" class="form-control"/>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="form-control btn btn-primary">Submit</button>
+	</div>
+</form>
+<a href="/signup">No account? Sign Up</a>
+=======
 </div>
+>>>>>>> 2dab9e888a5afb85b06a51b53a1f88fabe275533

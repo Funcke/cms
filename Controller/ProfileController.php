@@ -14,7 +14,7 @@ class ProfileController extends Controller
 		else
 			PageUtils::renderErrorPage(array('code' => '404', 'message' => 'User could not be found!'));
 	}
-	
+
 	public static function edit(Request &$request) 
 	{
 		$user = User::findById($request->params['id']);
