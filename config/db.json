@@ -1,0 +1,18 @@
+{
+    "default": {
+        "protocol": "sqlite",
+        "host": "file.db",
+        "username": "",
+        "password": "",
+        "port": "",
+        "database": ""
+    },
+    "test": {
+        "protocol": "sqlite",
+        "host": "test.db",
+        "username": "",
+        "password": "",
+        "port": "",
+        "database": ""
+    }
+}

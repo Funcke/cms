@@ -1,0 +1,23 @@
+{
+    "name": "jonas/project",
+    "description": "Project repo for my app",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jonas.funcke",
+            "email": "jonas@funcke.work"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "Controller/",
+            "Core\\": "Core/",
+            "Middleware\\": "Middleware/",
+            "Models\\": "Models"
+        }
+    }
+}
