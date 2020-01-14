@@ -12,6 +12,9 @@
     <title><?php echo $params["title"]; ?></title>
 </head>
 <body>
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">CMS - Elearning</a>
+    </nav>
     <?php include("views/".$name.".php"); ?>
 </body>
 </html>
