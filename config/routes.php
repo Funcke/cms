@@ -1,6 +1,6 @@
 <?php
   return [
-    'base_url' => '/blog/', #please do only add subfolders
+    'base_url' => '/', #please do only add subfolders
     '' => [
       'GET' =>'IndexController::index'
     ],
