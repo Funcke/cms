@@ -5,7 +5,7 @@
 				<h5 class="card-title text-center">Welcome!</h5>
 				<h6 class="card-subtitle mb-2 text-muted text-center">Please Sign Up</h6>
 				<hr class="light">
-				<form action="/authenticate" method="POST">
+				<form action="/signup" method="POST">
 					<?php if(array_key_exists('origin', $params)): ?>
 						<input type="hidden" name="redirect" value="<?= $params['origin'] ?>"/>
 					<?php endif; ?>

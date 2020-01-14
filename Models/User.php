@@ -27,11 +27,11 @@ namespace Models
          */
         public $Lastname;
         /**
-         * @var VARCHAR(50)
+         * @var VARCHAR(100)
          */
         public $Email;
         /**
-         * @var VARCHAR(100)
+         * @var VARCHAR(256)
          */
         public $Password;
         /**

@@ -5,7 +5,8 @@
       'GET' =>'IndexController::index'
     ],
     'signup' => [
-      'GET' => 'SessionController::show_signup_form'
+      'GET' => 'SessionController::show_signup_form',
+      'POST' => 'SessionController::signup'
     ],
     'authenticate' => [
       'GET' => 'SessionController::create',

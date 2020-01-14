@@ -72,7 +72,7 @@ namespace Core\Data\QueryBuilder
             $this->conditions = 0;
             foreach(array_keys($values) as $val)
             {
-                if($val != 'Id'){
+                if($val != 'id'){
                     $this->query .= $val.', '; 
                 }
             }
@@ -150,7 +150,7 @@ namespace Core\Data\QueryBuilder
                 $this->query .= ' AND ';
             }
             
-            $this->query .= $key.'='.$value;
+            $this->query .= $key."='".$value."'";
             
             return $this;
         }
