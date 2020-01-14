@@ -1,5 +1,5 @@
 <h3>Edit profile for <?= $params['user']->Username ?></h3>
-<form action="/blog/profile/edit" method="POST">
+<form action="/profile/edit" method="POST">
 	<input type="hidden" name="id" value="<?= $params['user']->id ?>" />
 	<div class="form-group">
 		<label for="username">Username: </label>

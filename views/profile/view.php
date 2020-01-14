@@ -24,7 +24,7 @@
     		   </ul>
         </div>
         <?php if(array_key_exists('logedin', $request->session)): ?>
-          <a class="btn btn-primary" href="/blog/profile/edit?id=2">Edit</a>
+          <a class="btn btn-primary" href="/profile/edit?id=2">Edit</a>
         <?php endif; ?>
     </div>
   </div>

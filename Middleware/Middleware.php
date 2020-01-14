@@ -13,6 +13,6 @@ class Middleware
     public static function allowIfNotAuthenticated(&$request)
     {
         if(array_key_exists('logedin', $request->session))
-            header('Location: /blog/');
+            header('Location: /');
     }
 }

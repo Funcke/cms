@@ -49,15 +49,15 @@ class SessionController extends Controller
             $request->session['logedin'] = $user->id;
             if($request->params['remember'])
                 $request->cookies['remember'] = $user->id;
-            header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/blog/'));
+            header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
-            header('Location: /blog/authenticate');
+            header('Location: /authenticate');
         }
     }
     
     public static function logout(Request &$request) 
     {
         unset($request->session['logedin']);
-        header('Location: /blog/');
+        header('Location: /');
     }
 }

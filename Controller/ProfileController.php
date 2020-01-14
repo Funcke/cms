@@ -35,7 +35,7 @@ class ProfileController extends Controller
 			$user->Password = password_hash($request->params['password'], PASSWORD_DEFAULT);
 			$user->Description = $request->params['description'];
 			$user->update();
-			header('Location: /blog/profile?id='.$request->params['id']);
+			header('Location: /profile?id='.$request->params['id']);
 		} else
 			PageUtils::renderErrorPage(array('code' => '404', 'message' => 'User  could not be found'));
 	}
