@@ -4,28 +4,28 @@ namespace Models
     use Core\Data\DataObject;
 
     /**
-     * Class QuizPart
+     * Class Attempt
      * @package Models
-     * @table QuizPart
+     * @table Attempt
      */
-    class QuizPart extends DataObject
+    class Attempt extends DataObject
     {
         /**
          * @var integer PRIMARY KEY AUTOINCREMENT
          */
         public $id;
         /**
-         * @var VARCHAR(50)
+         * @var integer
          */
-        public $English;
+        public $Successful;
         /**
-         * @var VARCHAR(50)
+         * @var integer, foreign key(QuizPart) references QuizPart(id)
          */
-        public $German;
+        public $QuizPartId;
         /**
-         * @var integer, foreign key(QuizId) references Quiz(id)
+         * @var integer, foreign key(UserId) references User(id)
          */
-        public $QuizId;
+        public $UserId;
         /**
          * @var date
          */

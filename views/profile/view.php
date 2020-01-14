@@ -1,4 +1,3 @@
-<link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
 <h3><?= $params['user']->Username ?></h3>
 <div class="card mb-3">
   <div class="row no-gutters">
@@ -13,19 +12,31 @@
         		<li class="list-group-item">Email: <?= $params['user']->Email ?></li>
         		<li class="list-group-item">Birthdate: <?= $params['user']->Birthdate ?></li>
         		<li class="list-group-item"><?= $params['user']->Description ?></li>
-        		<li class="list-group-item"><a style="color: #000" target="_blank" href="https://github.com/funcke"><i class="fab fa-github"></i></a>
-    					<a style="color: #000" target="_blank" href="https://www.linkedin.com/in/jonas-funcke"><i class="fab fa-linkedin"></i></a>
-    					<a style="color: #000" target="_bank" href="https://dev.funcke.work"><i class="far fa-address-card"></i></a>
-    					<a style="color: #000" target="_blank" href="https://twitter.com/funcke_"><i class="fab fa-twitter"></i></a>
-    					<a style="color: #000" target="_blank" href="https://dev.to/funcke"><i class="fab fa-dev" ></i></a>
-    					<a style="color: #000" target="_blank" href="https://stackoverflow.com/users/10971577/jonas-funcke"><i class="fab fa-stack-overflow"></i></a>
-    					<a style="color: #000" target="_blank" href="https://medium.com/@funckejonas"><i class="fab fa-medium"></i></a>
-    				</li>
-    		   </ul>
         </div>
         <?php if(array_key_exists('logedin', $request->session)): ?>
-          <a class="btn btn-primary" href="/profile/edit?id=2">Edit</a>
+          <a class="btn btn-primary" href="/profile/edit?id=<?= $params['user']->id ?>">Edit</a>
         <?php endif; ?>
     </div>
   </div>
 </div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">German</th>
+      <th scope="col">English</th>
+      <th scope="col">Tries</th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php foreach($params['attempts'] as $attempt): ?>
+		<?php $QuizPart = QuizPart::find(array('id' => $attempt->id))[0];?>
+		<tr>
+			<td><?= $attempt->id ?></td>
+			<td><?= $QuizPart->German ?></td>
+			<td><?= $Quizpart->English ?></td>
+			<td><?= $attempt->Successful ?></td>
+		</tr>
+	<?php endforeach; ?>
+  </tbody>
+</table>

@@ -54,6 +54,27 @@ class VocabController extends Controller
         }
     }
 
+    public static function show(Request &$request)
+    {
+        $quiz = [];
+        $quiz['metadata'] = Quiz::find(array('id' => $request->params['id']))[0];
+        $quiz['content'] = retrieve_quiz_from_db($request->params['id']);
+        self::render('vocab/show', $request, array('title' => 'Show', 'quiz' => $quiz));
+    }
+
+    public static function start_quiz(Request &$request)
+    {
+        $quiz = [];
+        $quiz['metadata'] = Quiz::find(array('id' => $request->params['id']))[0];
+        $quiz['content'] = retrieve_quiz_from_db($request->params['id']);
+        self::render('vocab/quiz.php', $request, array('title' => 'Quiz', 'quiz' => $quiz, 'format' => $request->params['format']));
+    }
+
+    public static function control(Request &$request)
+    {
+        # gfreit mi nu ned
+    }
+
     private static function retrieve_all_quizzes()
     {
         $quizzes = $Quiz::all();

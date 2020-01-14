@@ -3,14 +3,17 @@ use Core\Controller;
 use Core\Request;
 use Core\PageUtils;
 use Models\User;
+use Models\QuizPart;
+use Models\Attempt;
 
 class ProfileController extends Controller
 {
 	public static function view(Request &$request)
 	{
 		$user = User::findById($request->params['id']);
+		$attempts = Attempt::find(array('UserId' => $user->id));
 		if($user !== null)
-			self::render('profile/view', $request, array('title' => 'Profile', 'user' => $user));
+			self::render('profile/view', $request, array('title' => 'Profile', 'user' => $user, 'attempts' => $attempts));
 		else
 			PageUtils::renderErrorPage(array('code' => '404', 'message' => 'User could not be found!'));
 	}
