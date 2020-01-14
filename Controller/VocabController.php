@@ -4,6 +4,7 @@ use Core\Controller;
 use Core\Request;
 use Models\Quiz;
 use Models\QuizPart;
+
 class VocabController extends Controller 
 {
 
@@ -17,6 +18,8 @@ class VocabController extends Controller
     
     public static function new(Request &$request)
     {
+        echo "Hello";
+        error_reporting(E_ALL);
         self::render('vocab/new', $request, array(
             'title' => 'Create new Quiz'
         ));

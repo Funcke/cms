@@ -24,6 +24,12 @@ class SessionController extends Controller
             $user->Password = password_hash($request->params['password'], PASSWORD_DEFAULT);
             if($user->store() !== 0) {
                 unset($request->session['template']);
+                
+                $request->session['logedin'] = User::find(array(
+                    'email' => $user-Email
+                ))[0]->id;
+                if($request->params['remember'])
+                    $request->cookies['remember'] = $user->id;
                 header('Location: /profile?id='.(User::find(array('email' => $request->params['email'])[0])->id));
              } else {
                 $request->session['template'] = array('email' => $request->params['email'], 'password' => $request->params['password']);

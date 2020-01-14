@@ -10,7 +10,7 @@
             <input type="text" name="vocabs[0][]" required/>
         </div>
     </div>
-    <input type="submit" value="send>"/>
+    <input type="submit" value="send"/>
     <button onclick="addNewPair()">Add new Pair</button>
 </form>
 
@@ -22,5 +22,6 @@
         +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
         +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
     +'</div>')
+        pair_count++;
     }
 </script>

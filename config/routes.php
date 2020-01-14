@@ -1,6 +1,6 @@
 <?php
   return [
-    'base_url' => '/', #please do only add subfolders
+   #please do only add subfolders
     '' => [
       'GET' =>'IndexController::index'
     ],
@@ -25,12 +25,12 @@
     'admin' => [
       'GET' => 'AdminController::view'  
     ],
-    'vocab/new' => [
-      'GET' => 'VocabController::new'
-    ],
     'vocab' => [
       'GET' => 'VocabController::all',
       'POST' => 'VocabController::create'
+    ],
+    'vocab/new' => [
+      'GET' => 'VocabController::new'
     ],
     'vocab/show' => [
       'GET' => 'VocabController::show'
