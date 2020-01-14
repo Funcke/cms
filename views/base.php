@@ -13,13 +13,10 @@
 </head>
 <body>
     <?php if(array_key_exists('loggedin', $request->session)): ?>
-        <?php #include('views/:logedin_nav.php'); ?>
+        <?php include('views/logedin_nav.php'); ?>
     <?php else: ?>
-        <?php #include('views/:guest_nav.php'); ?>
+        <?php include('views/guest_nav.php'); ?>
     <?php endif; ?>
-    <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">CMS - Elearning</a>
-    </nav>
     <?php include("views/".$name.".php"); ?>
 </body>
 </html>
