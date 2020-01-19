@@ -9,6 +9,9 @@
             "email": "jonas@funcke.work"
         }
     ],
+    "require": {
+      "php": "7.3" 
+    },
     "require-dev": {
         "phpunit/phpunit": "*"
     },
