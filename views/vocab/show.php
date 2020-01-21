@@ -1,4 +1,4 @@
-<h2>Vocab Lection: <?= $params['quiz']['metadata']->Name ?></h2>
+<h2>Vocab Lection: <?= $params['quiz']['metadata']->Title ?></h2>
 <ul>
     <? foreach($params['quiz']['content'] as $quiz): ?>
         <li><?= $quiz->English?> - <?= $quiz->German ?></li>

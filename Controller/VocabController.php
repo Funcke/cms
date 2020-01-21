@@ -28,7 +28,8 @@ class VocabController extends Controller
     {
         $quiz = new Quiz();
         $quiz->Title = $request->params['name'];
-        $quiz->OwnerId = $request->session['logedin'];#$request->session['logedin'];
+        #$quiz->OwnerId = $request->session['logedin'];
+        $quiz->OwnerId = 4;
         if($quiz->store() !== 0)
         {
             $quiz = Quiz::find(array(
@@ -53,7 +54,7 @@ class VocabController extends Controller
     {
         $quiz = [];
         $quiz['metadata'] = Quiz::find(array('id' => $request->params['id']))[0];
-        $quiz['content'] = retrieve_quiz_from_db($request->params['id']);
+        $quiz['content'] = self::retrieve_quiz_from_db($request->params['id']);
         self::render('vocab/show', $request, array('title' => 'Show', 'quiz' => $quiz));
     }
 
@@ -67,12 +68,32 @@ class VocabController extends Controller
 
     public static function control(Request &$request)
     {
-        # gfreit mi nu ned
+        $quiz = Quiz::findById($request->params['id']);
+        if($quiz !== null) {
+            $res = $request->params['mode'] === 'en' ? control_en($request->params, retrieve_quiz_from_db($quiz->id)) : control_de($request->params, retrieve_quiz_from_db($quiz->id));
+        }
+    }
+
+# internal functions
+    private static function control_en($params, $parts)
+    {
+        foreach($params['guesses'] as $pair)
+        {
+
+        }
+    }
+
+    private static function control_de($params, $parts)
+    {
+        foreach($params['guesses'] as $pair)
+        {
+
+        }
     }
 
     private static function retrieve_all_quizzes()
     {
-        $quizzes = $Quiz::all();
+        $quizzes = Quiz::all();
         $result = [];
         foreach($quizzes as $q) {
             $result[$q->Name] = retrieve_quiz_from_db($q->id);
@@ -83,7 +104,7 @@ class VocabController extends Controller
 
     private static function retrieve_quiz_from_db(int $id) {
         $parts = QuizPart::find(array(
-            'id' => $id
+            'QuizId' => $id
         ));
         return $parts;
     }
