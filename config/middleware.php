@@ -1,6 +1,7 @@
 <?php
     // register Middleware function with ClassName::Method
-    return [
+    return [];
+    /*return [
         'all' => [],
         'authenticate/logout' => [
             'Middleware::CheckLogin'
@@ -26,5 +27,5 @@
         'vocab/train' => [
             'Middleware::CheckLogin'
         ]
-    ];
+    ];*/
 ?>

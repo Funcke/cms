@@ -15,13 +15,13 @@
 </form>
 
 <script>
-    let pair_count = 0;
+    let pair_count = 1;
     function addNewPair() {
         $('#vocab_space').append('<div>'
         +'<label>Enter Word: </label>'
         +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
         +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
-    +'</div>')
-        pair_count++;
+    +'</div>');
+        pair_count += 1;
     }
 </script>

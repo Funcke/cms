@@ -18,7 +18,6 @@ class VocabController extends Controller
     
     public static function new(Request &$request)
     {
-        echo "Hello";
         error_reporting(E_ALL);
         self::render('vocab/new', $request, array(
             'title' => 'Create new Quiz'
@@ -28,29 +27,26 @@ class VocabController extends Controller
     public static function create(Request &$request)
     {
         $quiz = new Quiz();
-        $quiz->Name = $request->params['name'];
-        $quiz->OwnerId = $request->session['logedin'];
-
+        $quiz->Title = $request->params['name'];
+        $quiz->OwnerId = 4;#$request->session['logedin'];
         if($quiz->store() !== 0)
         {
             $quiz = Quiz::find(array(
-                'name' => $quiz->Name,
+                'Title' => $quiz->Title,
                 'OwnerId' => $quiz->OwnerId
             ))[0];
-            foreach($request->params['vocabs'] as $english => $german) 
+            foreach($request->params['vocabs'] as $pair) 
             {
                 $quizpart = new QuizPart();
                 $quizpart->QuizId = $quiz->id;
-                $quizpart->English = $english;
-                $quizpart->German = $german;
+                $quizpart->English = $pair[0];
+                $quizpart->German = $pair[1];
                 $quizpart->store();
             }
 
             header('Location: /vocab/show?id='.$quiz->id);
         } else {
-            header('Location: /vocab/new', $request, array(
-                'title' => 'Create Quiz'
-            ));
+            header('Location: /vocab/new');
         }
     }
 
