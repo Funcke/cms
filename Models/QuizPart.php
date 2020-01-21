@@ -23,7 +23,7 @@ namespace Models
          */
         public $German;
         /**
-         * @var integer, foreign key(QuizId) references Quiz(id)
+         * @var integer
          */
         public $QuizId;
         /**

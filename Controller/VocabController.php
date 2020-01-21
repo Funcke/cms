@@ -28,7 +28,7 @@ class VocabController extends Controller
     {
         $quiz = new Quiz();
         $quiz->Title = $request->params['name'];
-        $quiz->OwnerId = 4;#$request->session['logedin'];
+        $quiz->OwnerId = $request->session['logedin'];#$request->session['logedin'];
         if($quiz->store() !== 0)
         {
             $quiz = Quiz::find(array(
@@ -43,7 +43,6 @@ class VocabController extends Controller
                 $quizpart->German = $pair[1];
                 $quizpart->store();
             }
-
             header('Location: /vocab/show?id='.$quiz->id);
         } else {
             header('Location: /vocab/new');

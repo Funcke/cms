@@ -19,11 +19,11 @@ namespace Models
          */
         public $Successful;
         /**
-         * @var integer, foreign key(QuizPartId) references QuizPart(id)
+         * @var integer
          */
         public $QuizPartId;
         /**
-         * @var integer, foreign key(UserId) references User(id)
+         * @var integer
          */
         public $UserId;
         /**

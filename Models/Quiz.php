@@ -19,7 +19,7 @@ namespace Models
          */
         public $Title;
         /**
-         * @var VARCHAR(50)
+         * @var integer
          */
         public $OwnerId;
         /**
