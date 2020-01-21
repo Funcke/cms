@@ -31,7 +31,7 @@ class SessionController extends Controller
                 ))[0]->id;
                 if($request->params['remember'])
                     $request->cookies['remember'] = $user->id;
-                header('Location: /profile?id='.(User::find(array('email' => $request->params['email'])[0])->id));
+                header('Location: /profile?id='.(User::find(array('email' => $request->params['email']))[0]->id));
              } else {
                 $request->session['template'] = array('email' => $request->params['email'], 'password' => $request->params['password']);
                 header('Location: /authenticate');

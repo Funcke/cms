@@ -20,7 +20,7 @@
             "Controller\\": "Controller/",
             "Core\\": "Core/",
             "Middleware\\": "Middleware/",
-            "Models\\": "Models"
+            "Models\\": "Models/"
         }
     }
 }
