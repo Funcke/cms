@@ -4,6 +4,8 @@ use Core\Controller;
 use Core\Request;
 use Models\Quiz;
 use Models\QuizPart;
+use Models\Attempt;
+use Core\PageUtils;
 
 class VocabController extends Controller 
 {
@@ -71,24 +73,60 @@ class VocabController extends Controller
         $quiz = Quiz::findById($request->params['id']);
         if($quiz !== null) {
             $res = $request->params['mode'] === 'en' ? control_en($request->params, retrieve_quiz_from_db($quiz->id)) : control_de($request->params, retrieve_quiz_from_db($quiz->id));
+            foreach($res as $correct)
+            {
+                $existing_attempt = Attempt::find(array(
+                    'UserId' => $request->session['logedin'],
+                    'QuizPartId' => $res->id ));
+                if($existing_attempt !== null)
+                {
+                    $existing_attempt->Successful += 1;
+                    $existing_attempt->update();
+                } else {
+                    $attempt = new Attempt();
+                    $attempt->UserId = $request->session['logedin'];
+                    $attempt->QuizPartId = $correct->id;
+                    $attempt->Successful = 1;
+                    $attempt->store();
+                }
+            }
+            self::render('vocab/result.php', $request, array('title' => 'Result', 'correct' => $res));
+        } else {
+            PageUtils::renderErrorPage(array('code' => 404, 'message' => 'Quiz could not be found'));
         }
     }
 
 # internal functions
     private static function control_en($params, $parts)
     {
+        $correct = [];
         foreach($params['guesses'] as $pair)
         {
-
+            foreach($parts as $control_pair)
+            {
+                if($control_pair->German == $pair['original'] && $control_pair->English == $pair['translation'])
+                {
+                    array_push($correct, $control_pair);
+                }
+            }
         }
+        return $correct;
     }
 
     private static function control_de($params, $parts)
     {
+        $correct = [];
         foreach($params['guesses'] as $pair)
         {
-
+            foreach($parts as $control_pair)
+            {
+                if($control_pair->English == $pair['original'] && $control_pair->German == $pair['translation'])
+                {
+                    array_push($correct, $control_pair);
+                }
+            }
         }
+        return $correct;
     }
 
     private static function retrieve_all_quizzes()

@@ -47,8 +47,8 @@ class SessionController extends Controller
         )[0];
         if(is_object($user) == 1 && password_verify($request->params['password'], $user->Password) == 1) {
             $request->session['logedin'] = $user->id;
-            if($request->params['remember'])
-                $request->cookies['remember'] = $user->id;
+            //if($request->params['remember'])
+            //    $request->cookies['remember'] = $user->id;
             header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
             header('Location: /authenticate');

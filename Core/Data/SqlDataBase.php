@@ -47,7 +47,6 @@ namespace Core\Data
      */
     public function query(string $query): array
     {
-        echo $query;
         $result = $this->connection->query($query);
         if($result != false)
         {
@@ -72,7 +71,6 @@ namespace Core\Data
      */
     public function execute(string $command):int
     {
-        echo $command;
         $res = $this->connection->exec($command);
         return $res;
     }
