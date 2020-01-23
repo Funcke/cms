@@ -17,7 +17,6 @@ class SessionController extends Controller
 
     public static function signup(Request &$request)
     {
-        echo "I am here";
         if($request->params['password'] === $request->params['password_rep']) 
         {
             $user = new User();
@@ -43,13 +42,13 @@ class SessionController extends Controller
     {
         $user = User::find(
             array(
-                'email' => $request->params['email']
+                'Email' => $request->params['email']
             )
         )[0];
-        if(is_object($user) && password_verify($request->params['password'], $user->Password)) {
+        if(is_object($user) == 1 && password_verify($request->params['password'], $user->Password) == 1) {
             $request->session['logedin'] = $user->id;
-            if($request->params['remember'])
-                $request->cookies['remember'] = $user->id;
+            //if($request->params['remember'])
+            //    $request->cookies['remember'] = $user->id;
             header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
             header('Location: /authenticate');

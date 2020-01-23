@@ -8,13 +8,16 @@
 
 use Core\Environment\ProductionEnvironmentAdapter;
 
-session_start();
+    session_start();
 
     error_reporting(E_ALL);
     require_once(__DIR__.'/vendor/autoload.php');
     
     $request = new Core\Request();
-    $router = new Core\Router(new ProductionEnvironmentAdapter(), require_once('config/routes.php'), require_once('config/middleware.php'));
+    $router = new Core\Router(
+        new ProductionEnvironmentAdapter(),
+        require_once('config/routes.php'),
+        require_once('config/middleware.php'));
 
     $router->handleRequest($request);
 ?>

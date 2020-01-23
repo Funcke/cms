@@ -4,6 +4,8 @@ use Core\Controller;
 use Core\Request;
 use Models\Quiz;
 use Models\QuizPart;
+use Models\Attempt;
+use Core\PageUtils;
 
 class VocabController extends Controller 
 {
@@ -28,7 +30,8 @@ class VocabController extends Controller
     {
         $quiz = new Quiz();
         $quiz->Title = $request->params['name'];
-        $quiz->OwnerId = $request->session['logedin'];#$request->session['logedin'];
+        #$quiz->OwnerId = $request->session['logedin'];
+        $quiz->OwnerId = 4;
         if($quiz->store() !== 0)
         {
             $quiz = Quiz::find(array(
@@ -53,7 +56,7 @@ class VocabController extends Controller
     {
         $quiz = [];
         $quiz['metadata'] = Quiz::find(array('id' => $request->params['id']))[0];
-        $quiz['content'] = retrieve_quiz_from_db($request->params['id']);
+        $quiz['content'] = self::retrieve_quiz_from_db($request->params['id']);
         self::render('vocab/show', $request, array('title' => 'Show', 'quiz' => $quiz));
     }
 
@@ -67,12 +70,68 @@ class VocabController extends Controller
 
     public static function control(Request &$request)
     {
-        # gfreit mi nu ned
+        $quiz = Quiz::findById($request->params['id']);
+        if($quiz !== null) {
+            $res = $request->params['mode'] === 'en' ? control_en($request->params, retrieve_quiz_from_db($quiz->id)) : control_de($request->params, retrieve_quiz_from_db($quiz->id));
+            foreach($res as $correct)
+            {
+                $existing_attempt = Attempt::find(array(
+                    'UserId' => $request->session['logedin'],
+                    'QuizPartId' => $res->id ));
+                if($existing_attempt !== null)
+                {
+                    $existing_attempt->Successful += 1;
+                    $existing_attempt->update();
+                } else {
+                    $attempt = new Attempt();
+                    $attempt->UserId = $request->session['logedin'];
+                    $attempt->QuizPartId = $correct->id;
+                    $attempt->Successful = 1;
+                    $attempt->store();
+                }
+            }
+            self::render('vocab/result.php', $request, array('title' => 'Result', 'correct' => $res));
+        } else {
+            PageUtils::renderErrorPage(array('code' => 404, 'message' => 'Quiz could not be found'));
+        }
+    }
+
+# internal functions
+    private static function control_en($params, $parts)
+    {
+        $correct = [];
+        foreach($params['guesses'] as $pair)
+        {
+            foreach($parts as $control_pair)
+            {
+                if($control_pair->German == $pair['original'] && $control_pair->English == $pair['translation'])
+                {
+                    array_push($correct, $control_pair);
+                }
+            }
+        }
+        return $correct;
+    }
+
+    private static function control_de($params, $parts)
+    {
+        $correct = [];
+        foreach($params['guesses'] as $pair)
+        {
+            foreach($parts as $control_pair)
+            {
+                if($control_pair->English == $pair['original'] && $control_pair->German == $pair['translation'])
+                {
+                    array_push($correct, $control_pair);
+                }
+            }
+        }
+        return $correct;
     }
 
     private static function retrieve_all_quizzes()
     {
-        $quizzes = $Quiz::all();
+        $quizzes = Quiz::all();
         $result = [];
         foreach($quizzes as $q) {
             $result[$q->Name] = retrieve_quiz_from_db($q->id);
@@ -83,7 +142,7 @@ class VocabController extends Controller
 
     private static function retrieve_quiz_from_db(int $id) {
         $parts = QuizPart::find(array(
-            'id' => $id
+            'QuizId' => $id
         ));
         return $parts;
     }
