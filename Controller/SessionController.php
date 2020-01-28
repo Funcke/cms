@@ -40,7 +40,6 @@ class SessionController extends Controller
 
     public static function login(Request &$request)
     {
-        print_r($request);
         $user = User::find(
             array(
                 'Email' => $request->params['email']
@@ -52,7 +51,7 @@ class SessionController extends Controller
             //    $request->cookies['remember'] = $user->id;
             header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
-            //header('Location: /authenticate');
+            header('Location: /authenticate');
         }
     }
     

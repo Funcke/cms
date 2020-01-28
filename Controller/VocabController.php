@@ -64,15 +64,15 @@ class VocabController extends Controller
     {
         $quiz = [];
         $quiz['metadata'] = Quiz::find(array('id' => $request->params['id']))[0];
-        $quiz['content'] = retrieve_quiz_from_db($request->params['id']);
-        self::render('vocab/quiz.php', $request, array('title' => 'Quiz', 'quiz' => $quiz, 'format' => $request->params['format']));
+        $quiz['content'] = self::retrieve_quiz_from_db($request->params['id']);
+        self::render('vocab/quiz', $request, array('title' => 'Quiz', 'quiz' => $quiz, 'format' => $request->params['format']));
     }
 
     public static function control(Request &$request)
     {
         $quiz = Quiz::findById($request->params['id']);
         if($quiz !== null) {
-            $res = $request->params['mode'] === 'en' ? control_en($request->params, retrieve_quiz_from_db($quiz->id)) : control_de($request->params, retrieve_quiz_from_db($quiz->id));
+            $res = $request->params['mode'] === 'en' ? control_en($request->params, self::retrieve_quiz_from_db($quiz->id)) : control_de($request->params, self::retrieve_quiz_from_db($quiz->id));
             foreach($res as $correct)
             {
                 $existing_attempt = Attempt::find(array(
@@ -134,7 +134,7 @@ class VocabController extends Controller
         $quizzes = Quiz::all();
         $result = [];
         foreach($quizzes as $q) {
-            $result[$q->Name] = retrieve_quiz_from_db($q->id);
+            $result[$q->Name] = self::retrieve_quiz_from_db($q->id);
         }
 
         return $result;
