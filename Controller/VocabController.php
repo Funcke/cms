@@ -82,12 +82,13 @@ class VocabController extends Controller
     {
         $quiz = Quiz::findById($request->params['id']);
         if($quiz !== null) {
-            $res = $request->params['mode'] === 'en' ? self::control_en($request->params, self::retrieve_quiz_from_db($quiz->id)) : self::control_de($request->params, self::retrieve_quiz_from_db($quiz->id));
+            $res = $request->params['mode'] === 'en' ? self::control_de($request->params, self::retrieve_quiz_from_db($quiz->id)) : self::control_en($request->params, self::retrieve_quiz_from_db($quiz->id));
+            print_r($res);
             foreach($res as $correct)
             {
                 $existing_attempt = Attempt::find(array(
-                    'UserId' => $request->session['logedin'],
-                    'QuizPartId' => $res->id ));
+                    'UserId' => $_SESSION['logedin'],
+                    'QuizPartId' => $correct->id ))[0];
                 if($existing_attempt !== null)
                 {
                     $existing_attempt->Successful += 1;
@@ -109,6 +110,7 @@ class VocabController extends Controller
 # internal functions
     private static function control_en($params, $parts)
     {
+        echo "Hello";
         $correct = [];
         foreach($params['guesses'] as $original => $translation)
         {
@@ -125,6 +127,7 @@ class VocabController extends Controller
 
     private static function control_de($params, $parts)
     {
+        echo "Hallo";
         $correct = [];
         foreach($params['guesses'] as $original => $translation)
         {

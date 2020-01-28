@@ -1,13 +1,21 @@
-<ul>
-  <?php foreach($params['users'] as $u): ?>
-    <? if($u->id !== $request->session['logedin']): ?>
-      <li><?= $u->Email ?> <button type="button" class="btn btn-primary" onclick="setInfo(<?= $u->id ?>);loadMessages();registerRefresh()" data-toggle="modal" data-target="#chatModal">
-      Send Message
-      </button></li>
-    <? endif; ?>
-  <?php endforeach; ?>
-</ul>
-
+<div class="container padding mt-5">
+    <div class="card mb-3">
+      <div class="card-header">
+        All Users
+      </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+          <?php foreach($params['users'] as $u): ?>
+            <? if($u->id !== $request->session['logedin']): ?>
+              <li class="list-group-item"><?= $u->Email ?> <button type="button" class="btn btn-primary" style="float: right" onclick="setInfo(<?= $u->id ?>);loadMessages();registerRefresh()" data-toggle="modal" data-target="#chatModal">
+              Send Message
+              </button></li>
+            <? endif; ?>
+          <?php endforeach; ?>
+        </ul>
+        </div>
+    </div>   
+</div>
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -47,7 +55,7 @@ function loadMessages() {
       console.log(element);
       $('#chatTarget').append("<li class='message " + 
       (element.Sender === "<?= $request->session['logedin'] ?>"? 'self' : 'partner')
-       + "'>" + element.Content + "<span>" + element.CreatedAt + "</span></li>");
+       + "'>" + element.Content + "<span>" + element.CreatedAt.split(" ")[0] + "</span></li>");
     })
   });
 }

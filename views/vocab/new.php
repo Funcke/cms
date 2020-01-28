@@ -27,8 +27,8 @@
     function addNewPair() {
         $('#vocab_space').append('<div>'
         +'<label>Enter Word: </label>'
-        +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
-        +'<input type="text" name="vocabs[' + pair_count + '][]" required/>'
+        +'<input type="text" class="form-control" name="vocabs[' + pair_count + '][]" required/>'
+        +'<input type="text" class="form-control" name="vocabs[' + pair_count + '][]" required/>'
     +'</div>');
         pair_count += 1;
     }

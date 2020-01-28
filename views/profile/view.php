@@ -30,11 +30,11 @@
       </thead>
       <tbody>
       <?php foreach($params['attempts'] as $attempt): ?>
-        <?php $QuizPart = QuizPart::find(array('id' => $attempt->id))[0];?>
+        <?php $QuizPart = Models\QuizPart::find(array('id' => $attempt->QuizPartId))[0];?>
         <tr>
           <td><?= $attempt->id ?></td>
           <td><?= $QuizPart->German ?></td>
-          <td><?= $Quizpart->English ?></td>
+          <td><?= $QuizPart->English ?></td>
           <td><?= $attempt->Successful ?></td>
         </tr>
       <?php endforeach; ?>

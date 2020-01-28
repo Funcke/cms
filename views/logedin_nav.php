@@ -10,7 +10,10 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="/vocab">Vocabulary Revisions</a>
+                <a class="nav-link" href="/chat">Chat</a>
+                <a class="nav-link" href="/authenticate/logout">Log Out</a>
+                <a class="nav-link" href="/profile?id=<?= $_SESSION['logedin'] ?>">Profile</a>
             </li>
         </ul>
     </div>

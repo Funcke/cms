@@ -35,7 +35,8 @@ class ProfileController extends Controller
 			$user->Firstname = $request->params['firstname'];
 			$user->Lastname = $request->params['lastname'];
 			$user->Email = $request->params['email'];
-			$user->Password = password_hash($request->params['password'], PASSWORD_DEFAULT);
+			if(!empty($request->params['password']))
+				$user->Password = password_hash($request->params['password'], PASSWORD_DEFAULT);
 			$user->Description = $request->params['description'];
 			$user->update();
 			header('Location: /profile?id='.$request->params['id']);
