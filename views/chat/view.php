@@ -1,7 +1,7 @@
 <ul>
   <?php foreach($params['users'] as $u): ?>
     <? if($u->id !== $request->session['logedin']): ?>
-      <li><?= $u->Email ?> <button type="button" class="btn btn-primary" onclick="setInfo(<?= $u->id ?>);loadMessages()" data-toggle="modal" data-target="#chatModal">
+      <li><?= $u->Email ?> <button type="button" class="btn btn-primary" onclick="setInfo(<?= $u->id ?>);loadMessages();registerRefresh()" data-toggle="modal" data-target="#chatModal">
       Send Message
       </button></li>
     <? endif; ?>
@@ -13,7 +13,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="chatModalLabel">Chat Now!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" onclick="unregisterRefresh()" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -22,8 +22,8 @@
         </ul>
       </div>
       <div class="modal-footer">
-        <input type="text" id="newMessage"/>
-        <button type="button" onclick="sendMessage()" />
+        <input type="text" id="newMessage" class="form-control"/>
+        <button type="button" class="btn btn-success" onclick="sendMessage()">Send</button>
         <button type="button" class="btn btn-warning" onclick="loadMessages()">Load</button>
       </div>
     </div>
@@ -32,6 +32,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 let partner = null;
+let interval;
 
 function setInfo(id) {
   partner = id;
@@ -56,6 +57,14 @@ function sendMessage() {
   $('#newMessage').empty();
   axios.post('chat', {target: partner, msg: msg}).then(loadMessages());
 }
+
+function registerRefresh() {
+  interval = setInterval(loadMessages, 2000);
+}
+
+function unregisterRefresh() {
+  clearInterval(interval);
+}
 </script>
 
 <style>
@@ -75,6 +84,8 @@ function sendMessage() {
     padding-left: 1em;
     width: 80%;
     float: left;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   .partner {
     background-color: #e4f0f5;
@@ -82,5 +93,11 @@ function sendMessage() {
     padding-left: 1em;
     width: 80%;
     float: right;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  .modal-body {
+    height: 70vh;
+    overflow: scroll;
   }
 </style>

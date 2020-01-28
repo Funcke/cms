@@ -12,10 +12,9 @@ class VocabController extends Controller
 
 	public static function all(Request &$request)
 	{
-		error_reporting(E_ALL);
 		self::render('vocab/all', $request, array(
 			'title' => 'Vocab Admin Page', 
-			'quizzes' => Quiz::all()));
+			'quizzes' => Quiz::find([])));
 	}
     
     public static function new(Request &$request)
@@ -83,7 +82,7 @@ class VocabController extends Controller
     {
         $quiz = Quiz::findById($request->params['id']);
         if($quiz !== null) {
-            $res = $request->params['mode'] === 'en' ? control_en($request->params, self::retrieve_quiz_from_db($quiz->id)) : control_de($request->params, self::retrieve_quiz_from_db($quiz->id));
+            $res = $request->params['mode'] === 'en' ? self::control_en($request->params, self::retrieve_quiz_from_db($quiz->id)) : self::control_de($request->params, self::retrieve_quiz_from_db($quiz->id));
             foreach($res as $correct)
             {
                 $existing_attempt = Attempt::find(array(
@@ -111,11 +110,11 @@ class VocabController extends Controller
     private static function control_en($params, $parts)
     {
         $correct = [];
-        foreach($params['guesses'] as $pair)
+        foreach($params['guesses'] as $original => $translation)
         {
             foreach($parts as $control_pair)
             {
-                if($control_pair->German == $pair['original'] && $control_pair->English == $pair['translation'])
+                if($control_pair->German == $original && $control_pair->English == $translation)
                 {
                     array_push($correct, $control_pair);
                 }
@@ -127,11 +126,11 @@ class VocabController extends Controller
     private static function control_de($params, $parts)
     {
         $correct = [];
-        foreach($params['guesses'] as $pair)
+        foreach($params['guesses'] as $original => $translation)
         {
             foreach($parts as $control_pair)
             {
-                if($control_pair->English == $pair['original'] && $control_pair->German == $pair['translation'])
+                if($control_pair->English == $original && $control_pair->German == $translation)
                 {
                     array_push($correct, $control_pair);
                 }

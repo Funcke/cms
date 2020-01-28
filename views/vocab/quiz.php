@@ -4,7 +4,7 @@
             <a href="/vocab/train?id=<?= $params['quiz']['metadata']->id ?>&format=en">Egnlish</a>
             | <a href="/vocab/train?id=<?= $params['quiz']['metadata']->id ?>&format=de">German</a>
             <hr class="light">
-            <form method="POST" action="vocab/train">
+            <form method="POST" action="/vocab/train">
                 <input type="hidden" name="mode" value="<?= $params['format'] ?>"/>
                 <input type="hidden" name="id" value="<?= $params['quiz']['metadata']->id ?>" />
                 <?php include('views/vocab/languages/_'.$params['format'].'.php'); ?>

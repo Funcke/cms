@@ -4,7 +4,7 @@
             <?= $vocab->English ?>
         </label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="<?= guesses[$vocab->English] ?>" />
+            <input type="text" class="form-control" name="guesses[<?=$vocab->English?>]" />
         </div>
     </div>
 <?php endforeach; ?>

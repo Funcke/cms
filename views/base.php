@@ -12,7 +12,7 @@
     <title><?php echo $params["title"]; ?></title>
 </head>
 <body>
-    <?php if(array_key_exists('loggedin', $request->session)): ?>
+    <?php if(array_key_exists('logedin', $_SESSION)): ?>
         <?php include('views/logedin_nav.php'); ?>
     <?php else: ?>
         <?php include('views/guest_nav.php'); ?>
