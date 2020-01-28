@@ -57,7 +57,7 @@ class SessionController extends Controller
     
     public static function logout(Request &$request) 
     {
-        unset($request->session['logedin']);
+        unset($_SESSION['logedin']);
         header('Location: /');
     }
 }

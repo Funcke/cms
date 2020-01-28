@@ -26,6 +26,17 @@ class VocabController extends Controller
         ));
     }
 
+    public static function import(Request &$request)
+    {
+        #error_reporting(E_ALL);
+        #$quiz_raw = new SimpleXMLElement($request->params['data']);
+        #print_r($quiz_raw);
+        #$quiz = new Quiz();
+        #$quiz->Title = $quiz_raw->name[0];
+        #print_r($quiz);
+        header('Location: https://www.json.org/json-en.html');
+    }
+
     public static function create(Request &$request)
     {
         $quiz = new Quiz();
@@ -90,7 +101,7 @@ class VocabController extends Controller
                     $attempt->store();
                 }
             }
-            self::render('vocab/result.php', $request, array('title' => 'Result', 'correct' => $res));
+            self::render('vocab/result', $request, array('title' => 'Result', 'correct' => $res));
         } else {
             PageUtils::renderErrorPage(array('code' => 404, 'message' => 'Quiz could not be found'));
         }

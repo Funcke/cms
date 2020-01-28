@@ -101,6 +101,9 @@ namespace Core
                     if($this->environment->server()["CONTENT_TYPE"] == "multipart/form-data" || $this->environment->server()["CONTENT_TYPE"] == "application/x-www-form-urlencoded"){
                         $request->params = array_replace([], $this->environment->post()); 
                         break;
+                    } else {
+                        $request->params = json_decode(file_get_contents("php://input"), true);
+                        break;
                     }
                 case 'PUT':
                 case 'DELETE': parse_str(file_get_contents('php://input'), $request->params); break;

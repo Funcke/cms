@@ -30,6 +30,9 @@
       'GET' => 'VocabController::all',
       'POST' => 'VocabController::create'
     ],
+    'vocab/import' => [
+      'POST' => 'VocabController::import'
+    ],
     'vocab/new' => [
       'GET' => 'VocabController::new'
     ],
@@ -39,5 +42,16 @@
     'vocab/train' => [
       'GET' => 'VocabController::start_quiz',
       'POST' => 'VocabController::control'
+    ],
+    'chat' => [
+      'GET' => 'ChatController::index',
+      'POST' => 'ChatController::send'
+    ],
+    'chat/load' => [
+      'GET' => 'ChatController::show'
+    ],
+    'chat/refresh' => [
+      'GET' => 'ChatController::recieve_update',
+      'POST' => 'ChatController::recieve_update'
     ]
   ];

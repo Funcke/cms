@@ -14,6 +14,14 @@
     <button onclick="addNewPair()">Add new Pair</button>
 </form>
 
+<form method="POST" action="/vocab/import">
+    <div>
+        <label>Import from file: </label>
+        <textarea name="data"></textarea>
+    </div>
+    <input type="submit" value="import" />
+</form>
+
 <script>
     let pair_count = 1;
     function addNewPair() {
