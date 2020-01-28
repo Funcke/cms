@@ -30,7 +30,7 @@ class VocabController extends Controller
     {
         $quiz = new Quiz();
         $quiz->Title = $request->params['name'];
-        #$quiz->OwnerId = $request->session['logedin'];
+        $quiz->OwnerId = $_SESSION['logedin'];
         $quiz->OwnerId = 4;
         if($quiz->store() !== 0)
         {

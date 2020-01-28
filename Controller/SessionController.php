@@ -25,12 +25,12 @@ class SessionController extends Controller
             if($user->store() !== 0) {
                 unset($request->session['template']);
                 
-                $request->session['logedin'] = User::find(array(
-                    'email' => $user->Email
+                $_SESSION['logedin'] = User::find(array(
+                    'Email' => $user->Email
                 ))[0]->id;
                 if($request->params['remember'])
                     $request->cookies['remember'] = $user->id;
-                header('Location: /profile?id='.(User::find(array('email' => $request->params['email']))[0]->id));
+                header('Location: /profile?id='.($_SESSION['logedin']));
              } else {
                 $request->session['template'] = array('email' => $request->params['email'], 'password' => $request->params['password']);
                 header('Location: /authenticate');
@@ -40,18 +40,19 @@ class SessionController extends Controller
 
     public static function login(Request &$request)
     {
+        print_r($request);
         $user = User::find(
             array(
                 'Email' => $request->params['email']
             )
         )[0];
         if(is_object($user) == 1 && password_verify($request->params['password'], $user->Password) == 1) {
-            $request->session['logedin'] = $user->id;
+            $_SESSION['logedin'] = $user->id;
             //if($request->params['remember'])
             //    $request->cookies['remember'] = $user->id;
             header('Location: '.(array_key_exists('origin', $request->params)? $request->params['origin'] : '/'));
         } else {
-            header('Location: /authenticate');
+            //header('Location: /authenticate');
         }
     }
     

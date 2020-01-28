@@ -9,8 +9,7 @@
 use Core\Environment\ProductionEnvironmentAdapter;
 
     session_start();
-
-    error_reporting(E_ALL);
+    //error_reporting(E_ALL);
     require_once(__DIR__.'/vendor/autoload.php');
     
     $request = new Core\Request();
