@@ -1,10 +1,30 @@
-<h2>Vocab Lection: <?= $params['quiz']['metadata']->Title ?></h2>
-<ul>
-    <? foreach($params['quiz']['content'] as $quiz): ?>
-        <li><span onclick="speakEn('<?=$quiz->English ?>')"><?= $quiz->English?></span> - <span onclick="speakGer('<?=$quiz->German ?>')"><?= $quiz->German ?></span></li>
-    <? endforeach; ?>
-</ul>
-<a href="/vocab/train?id=<?=$params['quiz']['metadata']->id ?>&format=en">Train now!</a>
+<div class="container padding mt-5">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+		<h2 class="card-title">Vocab Lection: <?= $params['quiz']['metadata']->Title ?></h2>
+		<table class="table">
+			<thead>
+				<tr>
+				<th scope="col">Englisch</th>
+				<th scope="col">Deutsch</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($params['quiz']['content'] as $quiz): ?>
+					<tr>
+						<td onclick="speakEn('<?=$quiz->English ?>')"><?= $quiz->English?></td>
+						<td onclick="speakGer('<?=$quiz->German ?>')"><?= $quiz->German ?></td>
+					</tr>	
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<hr class="light">
+			<a href="/vocab/train?id=<?=$params['quiz']['metadata']->id ?>&format=en">Train now!</a>
+        </div>
+    </div>   
+</div>
+
+
 
 <script>
 function speakEn(text) { 
