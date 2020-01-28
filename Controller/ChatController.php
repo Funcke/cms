@@ -23,10 +23,7 @@ class ChatController extends Controller
 
     public static function show(Request &$request)
     {
-      $messages = Message::find(array(
-        "ChatId" => $request->params['chat_id']
-      ));
-      echo json_encode($messages);
+      echo json_encode(self::messages($request->params['chat_id']));
     }
 
     public static function send(Request &$request)
@@ -49,19 +46,21 @@ class ChatController extends Controller
     public static function recieve_update(Request &$request)
     {
       $chat = self::find_chat($request->session['logedin'], $request->params['chat_id']);
-      $new_messages = Message::find(array(
-          "ChatId" => $chat->id,
-      ));
+      $new_messages = self::messages($chat->id);
       $payload = [];
-      foreach($new_messages as $m) {
-        if($m > $request->params['last_refresh'])
-          array_push($payload, $m);
+      if(array_key_exists('last_refresh', $request->params)) {
+        foreach($new_messages as $m) {
+          if($m > $request->params['last_refresh'])
+            array_push($payload, $m);
+        }
+      } else {
+        $payload = array_slice($new_messages, -50);
       }
 
       echo json_encode($payload);
     }
 
-    public static function find_chat($sender, $reciever)
+    private static function find_chat($sender, $reciever)
     {
       $chat = Chat::find(array(
         "User1" => $sender,
@@ -73,5 +72,12 @@ class ChatController extends Controller
           "User1" => $reciever
         ))[0];
       return $chat;
+    }
+    
+    private static function messages($chat_id)
+    {
+      return Message::find(array(
+          "ChatId" => $chat_id
+      ));
     }
 }
