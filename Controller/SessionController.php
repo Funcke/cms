@@ -40,6 +40,7 @@ class SessionController extends Controller
 
     public static function login(Request &$request)
     {
+        error_reporting(E_ALL);
         $user = User::find(
             array(
                 'Email' => $request->params['email']

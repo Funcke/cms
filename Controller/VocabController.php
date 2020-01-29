@@ -27,35 +27,18 @@ class VocabController extends Controller
 
     public static function import(Request &$request)
     {
-        #error_reporting(E_ALL);
-        #$quiz_raw = new SimpleXMLElement($request->params['data']);
-        #print_r($quiz_raw);
-        #$quiz = new Quiz();
-        #$quiz->Title = $quiz_raw->name[0];
-        #print_r($quiz);
-        header('Location: https://www.json.org/json-en.html');
+        if($quiz = self::create_quiz($request->params['title'], $_SESSION['logedin'], $request->params['vocab']))
+        {
+            echo $quiz->id;
+        } else {
+            echo 404;
+        }
     }
 
     public static function create(Request &$request)
     {
-        $quiz = new Quiz();
-        $quiz->Title = $request->params['name'];
-        $quiz->OwnerId = $_SESSION['logedin'];
-        $quiz->OwnerId = 4;
-        if($quiz->store() !== 0)
+        if($quiz = self::create_quiz($request->params['name'], $_SESSION['logedin'], $request->params['vocabs']))
         {
-            $quiz = Quiz::find(array(
-                'Title' => $quiz->Title,
-                'OwnerId' => $quiz->OwnerId
-            ))[0];
-            foreach($request->params['vocabs'] as $pair) 
-            {
-                $quizpart = new QuizPart();
-                $quizpart->QuizId = $quiz->id;
-                $quizpart->English = $pair[0];
-                $quizpart->German = $pair[1];
-                $quizpart->store();
-            }
             header('Location: /vocab/show?id='.$quiz->id);
         } else {
             header('Location: /vocab/new');
@@ -83,7 +66,6 @@ class VocabController extends Controller
         $quiz = Quiz::findById($request->params['id']);
         if($quiz !== null) {
             $res = $request->params['mode'] === 'en' ? self::control_de($request->params, self::retrieve_quiz_from_db($quiz->id)) : self::control_en($request->params, self::retrieve_quiz_from_db($quiz->id));
-            print_r($res);
             foreach($res as $correct)
             {
                 $existing_attempt = Attempt::find(array(
@@ -110,7 +92,6 @@ class VocabController extends Controller
 # internal functions
     private static function control_en($params, $parts)
     {
-        echo "Hello";
         $correct = [];
         foreach($params['guesses'] as $original => $translation)
         {
@@ -127,7 +108,6 @@ class VocabController extends Controller
 
     private static function control_de($params, $parts)
     {
-        echo "Hallo";
         $correct = [];
         foreach($params['guesses'] as $original => $translation)
         {
@@ -151,6 +131,30 @@ class VocabController extends Controller
         }
 
         return $result;
+    }
+    
+    private static function create_quiz($title, $owner, $parts) {
+        $quiz = new Quiz();
+        $quiz->Title = $title;
+        $quiz->OwnerId = $owner;
+        if($quiz->store() !== 0)
+        {
+            $quiz = Quiz::find(array(
+                'Title' => $quiz->Title,
+                'OwnerId' => $quiz->OwnerId
+            ))[0];
+            foreach($parts as $pair) 
+            {
+                $quizpart = new QuizPart();
+                $quizpart->QuizId = $quiz->id;
+                $quizpart->English = $pair[0];
+                $quizpart->German = $pair[1];
+                $quizpart->store();
+            }
+            return $quiz;
+        } else {
+            return null;
+        }
     }
 
     private static function retrieve_quiz_from_db(int $id) {

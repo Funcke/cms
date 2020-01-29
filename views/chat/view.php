@@ -91,7 +91,7 @@ function unregisterRefresh() {
     border-radius: 50px;
     padding-left: 1em;
     width: 80%;
-    float: left;
+    float: right;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
   }
@@ -100,7 +100,7 @@ function unregisterRefresh() {
     border-radius: 50px;
     padding-left: 1em;
     width: 80%;
-    float: right;
+    float: left;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
   }

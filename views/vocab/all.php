@@ -9,6 +9,8 @@
             <li class="list-group-item"><a href="/vocab/show?id=<?= $quiz->id ?>"><?= $quiz->Title ?></a></li>
             <?php endforeach; ?>
           </ul>
+          <br/>
+          <a href="/vocab/new" class="btn btn-primary form-control">Create Quiz</a>
         </div>
     </div>   
 </div>
